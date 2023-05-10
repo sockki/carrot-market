@@ -19,7 +19,9 @@ interface ReviewRes {
 }
 
 const Reviews = () => {
-  const { data } = useSWR<ReviewRes>(`/api/reviews`);
+  const { data } = useSWR<ReviewRes>(
+    typeof window === "undefined" ? null : `/api/reviews`
+  );
   return (
     <>
       {data?.reviews?.map((rev) => (
@@ -162,31 +164,28 @@ const Profile: NextPage = () => {
   );
 };
 
-const Page: NextPage<{ profile: User }>  = ({ profile }: any) => {
+const Page: NextPage<{ profile: User }> = ({ profile }: any) => {
   return (
     <SWRConfig
-    value={{
-      fallback: {
-        "/api/users/me": { ok: true, profile },
-      }
-    }}
+      value={{
+        fallback: {
+          "/api/users/me": { ok: true, profile },
+        },
+      }}
     >
-     
-        <Profile />
-
+      <Profile />
     </SWRConfig>
   );
 };
 
-
-export const getServerSideProps = withSsrSession(async function (
-  {req}: NextPageContext
-) {
+export const getServerSideProps = withSsrSession(async function ({
+  req,
+}: NextPageContext) {
   const profile = await client.user.findUnique({
     where: {
       id: req?.session.user?.id,
-    }
-  })
+    },
+  });
   return {
     props: {
       profile: JSON.parse(JSON.stringify(profile)),
