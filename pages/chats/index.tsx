@@ -6,6 +6,7 @@ import type { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 import client from "@/libs/server/client";
+import Image from "next/image";
 
 interface buyerwithseller extends Chat {
   seller: User;
@@ -61,10 +62,14 @@ const Chats: NextPage = () => {
           <Link key={chat?.id} href={`/chats/${chat?.id}`} legacyBehavior>
             <a className="flex mb-3 px-4 cursor-pointer py-2 items-center space-x-3">
               {chat?.seller?.avatar ? (
-                <img
-                  src={avatar(chat?.seller?.avatar)}
-                  className="w-10 h-10 bg-slate-500 rounded-full"
-                />
+                <div className="relative h-16 w-16">
+                  <Image
+                    alt=""
+                    fill
+                    src={avatar(chat?.seller?.avatar)}
+                    className="w-16 h-16 bg-slate-500 rounded-full"
+                  />
+                </div>
               ) : (
                 <div className="w-10 h-10 rounded-full bg-slate-300" />
               )}

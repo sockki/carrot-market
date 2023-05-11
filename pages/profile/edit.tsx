@@ -6,6 +6,7 @@ import useUser from "@/libs/client/useUser";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { avatar, cls } from "@/libs/client/utils";
 
 interface EditProfileForm {
   email?: string;

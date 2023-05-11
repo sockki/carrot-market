@@ -7,7 +7,7 @@ import type { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 import client from "@/libs/server/client";
-import { Suspense } from "react";
+import Image from "next/image";
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -66,10 +66,14 @@ const MiniProfile = () => {
     <Link href={"/profile/edit"} legacyBehavior>
       <a className="flex items-center space-x-3">
         {user?.avatar ? (
-          <img
+          <div className="relative h-16 w-16">
+            <Image
+            alt=""
+            fill
             src={avatar(user?.avatar)}
             className="w-16 h-16 bg-slate-500 rounded-full"
           />
+          </div>
         ) : (
           <div className="w-16 h-16 bg-slate-500 rounded-full" />
         )}

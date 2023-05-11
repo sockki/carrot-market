@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface Iitem {
@@ -16,7 +17,9 @@ export default function Item({ title, id, price, like, img }: Iitem) {
           {img === "xx" ? (
             <div className="w-20 h-20 bg-gray-400 rounded-md" />
           ) : (
-            <img src={`https://imagedelivery.net/sYiGaNmNG2M4hky1e84o2A/${img}/public`} className="w-20 h-20 rounded-md"/>
+            <div className="relative w-20 h-20" >
+              <Image alt="" fill src={`https://imagedelivery.net/sYiGaNmNG2M4hky1e84o2A/${img}/public`} className="w-20 h-20 rounded-md"/>
+            </div>
           )}
           <div className="pt-2">
             <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
