@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
   }
   if (!req.url.includes("/api")) {
     if (!req.url.includes("/enter") && !req.cookies.has("carrotsession")) {
-      return NextResponse.redirect(`${req.nextUrl.origin}/enter`);
+      return NextResponse.redirect(new URL('/enter', req.url));
     }
   }
 }
