@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { SWRConfig } from "swr";
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         src="https://developers.kakao.com/sdk/js/kakao.js"
         strategy="lazyOnload"
       />
+      <Analytics />
       
     </SWRConfig>
   );
