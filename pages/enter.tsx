@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import useMutation from "@/libs/client/useMutation";
 import { cls } from "@/libs/client/utils";
+import { Token } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Suspense, useEffect, useState } from "react";
@@ -19,6 +20,11 @@ interface TokenForm {
 interface MutationResult {
   ok: boolean;
 }
+
+interface Tokenres {
+  ok: boolean;
+  token: Token;
+}
 /*
 const Bs = dynamic(
     () =>
@@ -36,7 +42,7 @@ const Input = dynamic(() => import("@/components/input"), {
 
 export default function Enter() {
   const [enter, { loading, data, error }] =
-    useMutation<MutationResult>("/api/users/enter");
+    useMutation<Tokenres>("/api/users/enter");
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
     useMutation<MutationResult>("/api/users/confirm");
   const { register, handleSubmit, reset } = useForm<EnterForm>();
@@ -62,6 +68,11 @@ export default function Enter() {
   };
   const router = useRouter();
   useEffect(() => {
+    if (data?.ok) {
+      console.log(data.token.payload);
+    }
+  }, [data]);
+  useEffect(() => {
     if (tokenData?.ok) {
       router.push("/");
     }
@@ -83,6 +94,7 @@ export default function Enter() {
               name="token"
               type="number"
             />
+            <div className="mt-1 ">console에 token 번호가 있습니다!</div>
             <div className="mt-8">
               <Button name={tokenLoading ? "Loading" : "Confirm Token"} />
             </div>
